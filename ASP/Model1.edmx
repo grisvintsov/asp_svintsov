@@ -1,0 +1,784 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище svintsovModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="acc_id" />
+          </Key>
+          <Property Name="acc_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="acc_log" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="acc_pass" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="right_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bag">
+          <Key>
+            <PropertyRef Name="bag_id" />
+          </Key>
+          <Property Name="char_id" Type="int" Nullable="false" />
+          <Property Name="item_id" Type="int" Nullable="false" />
+          <Property Name="bag_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Characters">
+          <Key>
+            <PropertyRef Name="char_id" />
+          </Key>
+          <Property Name="char_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="acc_id" Type="int" Nullable="false" />
+          <Property Name="char_n" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="race_id" Type="int" Nullable="false" />
+          <Property Name="prof_id" Type="int" Nullable="false" />
+          <Property Name="gend_id" Type="int" Nullable="false" />
+          <Property Name="stat_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Colors">
+          <Key>
+            <PropertyRef Name="col_id" />
+          </Key>
+          <Property Name="col_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="col_n" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genders">
+          <Key>
+            <PropertyRef Name="gend_id" />
+          </Key>
+          <Property Name="gend_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="gend_n" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="item_id" />
+          </Key>
+          <Property Name="item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="item_n" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="type_id" Type="int" Nullable="false" />
+          <Property Name="stat_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profs">
+          <Key>
+            <PropertyRef Name="prof_id" />
+          </Key>
+          <Property Name="prof_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prof_n" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prof_inf" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Races">
+          <Key>
+            <PropertyRef Name="race_id" />
+          </Key>
+          <Property Name="race_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="race_n" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="race_inf" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="col_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rights">
+          <Key>
+            <PropertyRef Name="right_id" />
+          </Key>
+          <Property Name="right_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="right_n" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stats">
+          <Key>
+            <PropertyRef Name="stat_id" />
+          </Key>
+          <Property Name="stat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dmg" Type="int" Nullable="false" />
+          <Property Name="def" Type="int" Nullable="false" />
+          <Property Name="hp" Type="int" Nullable="false" />
+          <Property Name="mp" Type="int" Nullable="false" />
+          <Property Name="stat_n" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Types">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_n" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Accounts_Rights">
+          <End Role="Rights" Type="Self.Rights" Multiplicity="1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rights">
+              <PropertyRef Name="right_id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="right_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bag_Characters">
+          <End Role="Characters" Type="Self.Characters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bag" Type="Self.Bag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Characters">
+              <PropertyRef Name="char_id" />
+            </Principal>
+            <Dependent Role="Bag">
+              <PropertyRef Name="char_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bag_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="Bag" Type="Self.Bag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="item_id" />
+            </Principal>
+            <Dependent Role="Bag">
+              <PropertyRef Name="item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="acc_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="acc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Genders">
+          <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="gend_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="gend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Profs">
+          <End Role="Profs" Type="Self.Profs" Multiplicity="1" />
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profs">
+              <PropertyRef Name="prof_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="prof_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Races">
+          <End Role="Races" Type="Self.Races" Multiplicity="1" />
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Races">
+              <PropertyRef Name="race_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="race_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Stats">
+          <End Role="Stats" Type="Self.Stats" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stats">
+              <PropertyRef Name="stat_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="stat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Stats">
+          <End Role="Stats" Type="Self.Stats" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stats">
+              <PropertyRef Name="stat_id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="stat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Types">
+          <End Role="Types" Type="Self.Types" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Races_Colors">
+          <End Role="Colors" Type="Self.Colors" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Races" Type="Self.Races" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colors">
+              <PropertyRef Name="col_id" />
+            </Principal>
+            <Dependent Role="Races">
+              <PropertyRef Name="col_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище svintsovModelContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bag" EntityType="Self.Bag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Characters" EntityType="Self.Characters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Colors" EntityType="Self.Colors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profs" EntityType="Self.Profs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Races" EntityType="Self.Races" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rights" EntityType="Self.Rights" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stats" EntityType="Self.Stats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Types" EntityType="Self.Types" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Accounts_Rights" Association="Self.FK_Accounts_Rights">
+            <End Role="Rights" EntitySet="Rights" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bag_Characters" Association="Self.FK_Bag_Characters">
+            <End Role="Characters" EntitySet="Characters" />
+            <End Role="Bag" EntitySet="Bag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bag_Items" Association="Self.FK_Bag_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="Bag" EntitySet="Bag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Accounts" Association="Self.FK_Characters_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Genders" Association="Self.FK_Characters_Genders">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Profs" Association="Self.FK_Characters_Profs">
+            <End Role="Profs" EntitySet="Profs" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Races" Association="Self.FK_Characters_Races">
+            <End Role="Races" EntitySet="Races" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Stats" Association="Self.FK_Characters_Stats">
+            <End Role="Stats" EntitySet="Stats" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Stats" Association="Self.FK_Items_Stats">
+            <End Role="Stats" EntitySet="Stats" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Types" Association="Self.FK_Items_Types">
+            <End Role="Types" EntitySet="Types" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Races_Colors" Association="Self.FK_Races_Colors">
+            <End Role="Colors" EntitySet="Colors" />
+            <End Role="Races" EntitySet="Races" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="svintsovModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="acc_id" />
+          </Key>
+          <Property Name="acc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="acc_log" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="acc_pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="right_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rights" Relationship="Self.FK_Accounts_Rights" FromRole="Accounts" ToRole="Rights" />
+          <NavigationProperty Name="Characters" Relationship="Self.FK_Characters_Accounts" FromRole="Accounts" ToRole="Characters" />
+        </EntityType>
+        <EntityType Name="Bag">
+          <Key>
+            <PropertyRef Name="bag_id" />
+          </Key>
+          <Property Name="char_id" Type="Int32" Nullable="false" />
+          <Property Name="item_id" Type="Int32" Nullable="false" />
+          <Property Name="bag_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Characters" Relationship="Self.FK_Bag_Characters" FromRole="Bag" ToRole="Characters" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Bag_Items" FromRole="Bag" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="Characters">
+          <Key>
+            <PropertyRef Name="char_id" />
+          </Key>
+          <Property Name="char_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="acc_id" Type="Int32" Nullable="false" />
+          <Property Name="char_n" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="race_id" Type="Int32" Nullable="false" />
+          <Property Name="prof_id" Type="Int32" Nullable="false" />
+          <Property Name="gend_id" Type="Int32" Nullable="false" />
+          <Property Name="stat_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Characters_Accounts" FromRole="Characters" ToRole="Accounts" />
+          <NavigationProperty Name="Bag" Relationship="Self.FK_Bag_Characters" FromRole="Characters" ToRole="Bag" />
+          <NavigationProperty Name="Genders" Relationship="Self.FK_Characters_Genders" FromRole="Characters" ToRole="Genders" />
+          <NavigationProperty Name="Profs" Relationship="Self.FK_Characters_Profs" FromRole="Characters" ToRole="Profs" />
+          <NavigationProperty Name="Races" Relationship="Self.FK_Characters_Races" FromRole="Characters" ToRole="Races" />
+          <NavigationProperty Name="Stats" Relationship="Self.FK_Characters_Stats" FromRole="Characters" ToRole="Stats" />
+        </EntityType>
+        <EntityType Name="Colors">
+          <Key>
+            <PropertyRef Name="col_id" />
+          </Key>
+          <Property Name="col_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="col_n" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Races" Relationship="Self.FK_Races_Colors" FromRole="Colors" ToRole="Races" />
+        </EntityType>
+        <EntityType Name="Genders">
+          <Key>
+            <PropertyRef Name="gend_id" />
+          </Key>
+          <Property Name="gend_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gend_n" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Characters" Relationship="Self.FK_Characters_Genders" FromRole="Genders" ToRole="Characters" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="item_id" />
+          </Key>
+          <Property Name="item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="item_n" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="type_id" Type="Int32" Nullable="false" />
+          <Property Name="stat_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bag" Relationship="Self.FK_Bag_Items" FromRole="Items" ToRole="Bag" />
+          <NavigationProperty Name="Stats" Relationship="Self.FK_Items_Stats" FromRole="Items" ToRole="Stats" />
+          <NavigationProperty Name="Types" Relationship="Self.FK_Items_Types" FromRole="Items" ToRole="Types" />
+        </EntityType>
+        <EntityType Name="Profs">
+          <Key>
+            <PropertyRef Name="prof_id" />
+          </Key>
+          <Property Name="prof_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prof_n" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prof_inf" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Characters" Relationship="Self.FK_Characters_Profs" FromRole="Profs" ToRole="Characters" />
+        </EntityType>
+        <EntityType Name="Races">
+          <Key>
+            <PropertyRef Name="race_id" />
+          </Key>
+          <Property Name="race_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="race_n" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="race_inf" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="col_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Characters" Relationship="Self.FK_Characters_Races" FromRole="Races" ToRole="Characters" />
+          <NavigationProperty Name="Colors" Relationship="Self.FK_Races_Colors" FromRole="Races" ToRole="Colors" />
+        </EntityType>
+        <EntityType Name="Rights">
+          <Key>
+            <PropertyRef Name="right_id" />
+          </Key>
+          <Property Name="right_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="right_n" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Accounts_Rights" FromRole="Rights" ToRole="Accounts" />
+        </EntityType>
+        <EntityType Name="Stats">
+          <Key>
+            <PropertyRef Name="stat_id" />
+          </Key>
+          <Property Name="stat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dmg" Type="Int32" Nullable="false" />
+          <Property Name="def" Type="Int32" Nullable="false" />
+          <Property Name="hp" Type="Int32" Nullable="false" />
+          <Property Name="mp" Type="Int32" Nullable="false" />
+          <Property Name="stat_n" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Characters" Relationship="Self.FK_Characters_Stats" FromRole="Stats" ToRole="Characters" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Items_Stats" FromRole="Stats" ToRole="Items" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Types">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_n" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_Items_Types" FromRole="Types" ToRole="Items" />
+        </EntityType>
+        <Association Name="FK_Accounts_Rights">
+          <End Role="Rights" Type="Self.Rights" Multiplicity="1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rights">
+              <PropertyRef Name="right_id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="right_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="acc_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="acc_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bag_Characters">
+          <End Role="Characters" Type="Self.Characters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bag" Type="Self.Bag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Characters">
+              <PropertyRef Name="char_id" />
+            </Principal>
+            <Dependent Role="Bag">
+              <PropertyRef Name="char_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bag_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="Bag" Type="Self.Bag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="item_id" />
+            </Principal>
+            <Dependent Role="Bag">
+              <PropertyRef Name="item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Genders">
+          <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="gend_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="gend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Profs">
+          <End Role="Profs" Type="Self.Profs" Multiplicity="1" />
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profs">
+              <PropertyRef Name="prof_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="prof_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Races">
+          <End Role="Races" Type="Self.Races" Multiplicity="1" />
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Races">
+              <PropertyRef Name="race_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="race_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Characters_Stats">
+          <End Role="Stats" Type="Self.Stats" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Characters" Type="Self.Characters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stats">
+              <PropertyRef Name="stat_id" />
+            </Principal>
+            <Dependent Role="Characters">
+              <PropertyRef Name="stat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Races_Colors">
+          <End Role="Colors" Type="Self.Colors" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Races" Type="Self.Races" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colors">
+              <PropertyRef Name="col_id" />
+            </Principal>
+            <Dependent Role="Races">
+              <PropertyRef Name="col_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Stats">
+          <End Role="Stats" Type="Self.Stats" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stats">
+              <PropertyRef Name="stat_id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="stat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Types">
+          <End Role="Types" Type="Self.Types" Multiplicity="1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Types">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="svintsovEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" />
+          <EntitySet Name="Bag" EntityType="Self.Bag" />
+          <EntitySet Name="Characters" EntityType="Self.Characters" />
+          <EntitySet Name="Colors" EntityType="Self.Colors" />
+          <EntitySet Name="Genders" EntityType="Self.Genders" />
+          <EntitySet Name="Items" EntityType="Self.Items" />
+          <EntitySet Name="Profs" EntityType="Self.Profs" />
+          <EntitySet Name="Races" EntityType="Self.Races" />
+          <EntitySet Name="Rights" EntityType="Self.Rights" />
+          <EntitySet Name="Stats" EntityType="Self.Stats" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Types" EntityType="Self.Types" />
+          <AssociationSet Name="FK_Accounts_Rights" Association="Self.FK_Accounts_Rights">
+            <End Role="Rights" EntitySet="Rights" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Accounts" Association="Self.FK_Characters_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bag_Characters" Association="Self.FK_Bag_Characters">
+            <End Role="Characters" EntitySet="Characters" />
+            <End Role="Bag" EntitySet="Bag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bag_Items" Association="Self.FK_Bag_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="Bag" EntitySet="Bag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Genders" Association="Self.FK_Characters_Genders">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Profs" Association="Self.FK_Characters_Profs">
+            <End Role="Profs" EntitySet="Profs" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Races" Association="Self.FK_Characters_Races">
+            <End Role="Races" EntitySet="Races" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Characters_Stats" Association="Self.FK_Characters_Stats">
+            <End Role="Stats" EntitySet="Stats" />
+            <End Role="Characters" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Races_Colors" Association="Self.FK_Races_Colors">
+            <End Role="Colors" EntitySet="Colors" />
+            <End Role="Races" EntitySet="Races" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Stats" Association="Self.FK_Items_Stats">
+            <End Role="Stats" EntitySet="Stats" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Types" Association="Self.FK_Items_Types">
+            <End Role="Types" EntitySet="Types" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище svintsovModelContainer" CdmEntityContainer="svintsovEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="svintsovModel.Accounts">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="acc_id" ColumnName="acc_id" />
+                <ScalarProperty Name="acc_log" ColumnName="acc_log" />
+                <ScalarProperty Name="acc_pass" ColumnName="acc_pass" />
+                <ScalarProperty Name="right_id" ColumnName="right_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bag">
+            <EntityTypeMapping TypeName="svintsovModel.Bag">
+              <MappingFragment StoreEntitySet="Bag">
+                <ScalarProperty Name="char_id" ColumnName="char_id" />
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="bag_id" ColumnName="bag_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Characters">
+            <EntityTypeMapping TypeName="svintsovModel.Characters">
+              <MappingFragment StoreEntitySet="Characters">
+                <ScalarProperty Name="char_id" ColumnName="char_id" />
+                <ScalarProperty Name="acc_id" ColumnName="acc_id" />
+                <ScalarProperty Name="char_n" ColumnName="char_n" />
+                <ScalarProperty Name="race_id" ColumnName="race_id" />
+                <ScalarProperty Name="prof_id" ColumnName="prof_id" />
+                <ScalarProperty Name="gend_id" ColumnName="gend_id" />
+                <ScalarProperty Name="stat_id" ColumnName="stat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Colors">
+            <EntityTypeMapping TypeName="svintsovModel.Colors">
+              <MappingFragment StoreEntitySet="Colors">
+                <ScalarProperty Name="col_id" ColumnName="col_id" />
+                <ScalarProperty Name="col_n" ColumnName="col_n" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="svintsovModel.Genders">
+              <MappingFragment StoreEntitySet="Genders">
+                <ScalarProperty Name="gend_id" ColumnName="gend_id" />
+                <ScalarProperty Name="gend_n" ColumnName="gend_n" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="svintsovModel.Items">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="item_n" ColumnName="item_n" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="stat_id" ColumnName="stat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profs">
+            <EntityTypeMapping TypeName="svintsovModel.Profs">
+              <MappingFragment StoreEntitySet="Profs">
+                <ScalarProperty Name="prof_id" ColumnName="prof_id" />
+                <ScalarProperty Name="prof_n" ColumnName="prof_n" />
+                <ScalarProperty Name="prof_inf" ColumnName="prof_inf" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Races">
+            <EntityTypeMapping TypeName="svintsovModel.Races">
+              <MappingFragment StoreEntitySet="Races">
+                <ScalarProperty Name="race_id" ColumnName="race_id" />
+                <ScalarProperty Name="race_n" ColumnName="race_n" />
+                <ScalarProperty Name="race_inf" ColumnName="race_inf" />
+                <ScalarProperty Name="col_id" ColumnName="col_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rights">
+            <EntityTypeMapping TypeName="svintsovModel.Rights">
+              <MappingFragment StoreEntitySet="Rights">
+                <ScalarProperty Name="right_id" ColumnName="right_id" />
+                <ScalarProperty Name="right_n" ColumnName="right_n" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stats">
+            <EntityTypeMapping TypeName="svintsovModel.Stats">
+              <MappingFragment StoreEntitySet="Stats">
+                <ScalarProperty Name="stat_id" ColumnName="stat_id" />
+                <ScalarProperty Name="dmg" ColumnName="dmg" />
+                <ScalarProperty Name="def" ColumnName="def" />
+                <ScalarProperty Name="hp" ColumnName="hp" />
+                <ScalarProperty Name="mp" ColumnName="mp" />
+                <ScalarProperty Name="stat_n" ColumnName="stat_n" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="svintsovModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Types">
+            <EntityTypeMapping TypeName="svintsovModel.Types">
+              <MappingFragment StoreEntitySet="Types">
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="type_n" ColumnName="type_n" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

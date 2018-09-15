@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2c6b6bcab7ee451bb13faf293a6e37b3" Name="Diagram1">
+        <EntityTypeShape EntityType="svintsovModel.Accounts" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Bag" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Characters" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Colors" Width="1.5" PointX="1.5" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Genders" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Items" Width="1.5" PointX="6" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Profs" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Races" Width="1.5" PointX="0.75" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Rights" Width="1.5" PointX="1.5" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Stats" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="svintsovModel.Types" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="svintsovModel.FK_Accounts_Rights" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Characters_Accounts" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Bag_Characters" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Bag_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Characters_Genders" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Characters_Profs" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Characters_Races" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Characters_Stats" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Races_Colors" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Items_Stats" ManuallyRouted="false" />
+        <AssociationConnector Association="svintsovModel.FK_Items_Types" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
